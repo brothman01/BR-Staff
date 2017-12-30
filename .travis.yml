@@ -37,8 +37,3 @@ script:
   # You can use any of the normal PHPCS command line arguments in the command:
   # https://github.com/squizlabs/PHP_CodeSniffer/wiki/Usage
   - ${HOME}/.composer/vendor/squizlabs/php_codesniffer/bin/phpcs --standard=WordPress-Core --extensions=php --colors -s -p -v ./
-
-ignore:
-  - *.md
-  - CMB2/*
-  - CMBB2
