@@ -10,7 +10,7 @@ Text Domain: wordpress-importer
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 if ( ! defined( 'ABSPATH' ) ) {
-	die( 'unatuhorized' );
+	die( 'unauthorized' );
 }
 
 class Br_Staff {
@@ -47,47 +47,57 @@ class Br_Staff {
  * @return [type]       [description]
  */
 	public function br_person_shortcode_function( $atts ) {
+				$attributes = shortcode_atts( array(
+					'id'  => false,
+					'no_bio' => 'false'
+				), $atts );
 
-		$attributes = shortcode_atts( array(
-			'id'  => false,
-		), $atts );
+				$contents = '';
 
-		$contents = '';
+				// The Query
+				$the_query = new WP_Query( [
+					'post_type' => 'br_person',
+					'p' => (int) $atts['id'],
+				]);
 
-		// The Query
-		$the_query = new WP_Query( [
-			'post_type' => 'br_person',
-			'p' => (int) $atts['id'],
-		]);
+				// The Loop
+				if ( $the_query->have_posts() ) {
 
-		// The Loop
-		if ( $the_query->have_posts() ) {
+					while ( $the_query->have_posts() ) {
+						$the_query->the_post();
 
-			while ( $the_query->have_posts() ) {
-				$the_query->the_post();
-				$contents .= '<div class="staff-member-div">
-							<a href="' . get_permalink() . '">
-								<div class="span4">
-									<img class="staff-portrait" src="' . esc_attr( get_post_meta( get_the_ID(), 'br_portrait', true ) ) . '" />
-									<p class="title-text">' . esc_attr( get_post_meta( get_the_ID(), 'br_title', true ) ) . '</p>
-								</div>
-							</a>
 
-				<div class="span8">
-						<div class="name-text">' . esc_attr( get_post_meta( get_the_ID(), 'br_name', true ) ) . '
-						<div class="cool-underline" style="width: 40%;"><div style="background: #E6E6E6; width: 80%; height: 4px; position: relative; bottom: 0%; margin-left: 20%;"></div></div></div>
-						 <div class="bio-text">' . esc_attr( get_post_meta( get_the_ID(), 'br_bio', true ) ) . '</div>
-				</div>
+						if ( 'false' == $attributes['no_bio'] ) {
+										$contents .= '<div class="span4">
+											<a href="' . get_permalink() .'"><img class="staff-portrait" src="' . esc_attr( get_post_meta( get_the_ID(), 'br_portrait', true ) ) . '" /></a>
+											<p class="title-text">' . esc_attr( get_post_meta( get_the_ID(), 'br_title', true ) ) . '</p>
+										</div>
 
-				</div>';
-			}
-			/* Restore original Post Data */
-			wp_reset_postdata();
-		} else {
-			// no posts found
-		}
+						<div class="span8">
+								<div class="name-text">' . esc_attr( get_post_meta( get_the_ID(), 'br_name', true ) ) . '
+								<div class="cool-underline" style="width: 40%;"><div style="background: #E6E6E6; width: 80%; height: 4px; position: relative; bottom: 0%; margin-left: 20%;"></div></div></div>
+								 <div class="bio-text">' . esc_attr( get_post_meta( get_the_ID(), 'br_bio', true ) ) . '</div>
+						</div>';
 
-		 return $contents;
+		      } elseif ( 'true' == $attributes['no_bio'] ) {
+
+							$contents .= '<div class="span12" style="text-align: center; overflow: hidden; padding-bottom: 5px;">
+							<a href="' . get_permalink() .'"><img style="width: 250px; overflow: hidden;" src="' . esc_attr( get_post_meta( get_the_ID(), 'br_portrait', true ) ) . '" /></a>
+							<p style="overflow: hidden; text-align: center;" class="title-text">' . esc_attr( get_post_meta( get_the_ID(), 'br_title', true ) ) . '</p>
+							<div style="overflow: hidden; text-align: center;" class="name-text span12">' . esc_attr( get_post_meta( get_the_ID(), 'br_name', true ) ) . '</div>
+						</div>';
+					}
+
+
+
+					}
+					/* Restore original Post Data */
+					wp_reset_postdata();
+				} else {
+					// no posts found
+				}
+
+				 return $contents;
 	}
 
 	/**

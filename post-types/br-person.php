@@ -115,7 +115,7 @@ function cmb2_sample_metaboxes() {
 
 		$cmb->add_field( array(
 			'name'    => esc_html__( 'Bio', 'cmb2' ),
-			'desc'    => esc_html__( 'field description (optional)', 'cmb2' ),
+			'desc'    => '',
 			'id'      => $prefix . 'bio',
 			'type'    => 'wysiwyg',
 			'options' => array( 'textarea_rows' => 5, ),
