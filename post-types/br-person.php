@@ -1,7 +1,7 @@
 <?php
 function custom_post_type() {
 
-		$labels = array(
+		$labels = [
 			'name'                  => _x( 'Staff Members', 'Post Type General Name', 'text_domain' ),
 			'singular_name'         => _x( 'Staff', 'Post Type Singular Name', 'text_domain' ),
 			'menu_name'             => __( 'Staff', 'text_domain' ),
@@ -27,27 +27,27 @@ function custom_post_type() {
 			'items_list'            => __( 'Items list', 'text_domain' ),
 			'items_list_navigation' => __( 'Items list navigation', 'text_domain' ),
 			'filter_items_list'     => __( 'Filter items list', 'text_domain' ),
-		);
-		$args = array(
-			'label'                 => __( 'Post Type', 'text_domain' ),
-			'description'           => __( 'Post Type Description', 'text_domain' ),
-			'labels'                => $labels,
-			'supports'              => array(),
-			'taxonomies'            => array(),
-			'hierarchical'          => false,
-			'public'                => true,
-			'show_ui'               => true,
-			'show_in_menu'          => true,
-			'menu_position'         => 5,
-			'show_in_admin_bar'     => true,
-			'show_in_nav_menus'     => true,
-			'can_export'            => true,
-			'has_archive'           => true,
-			'exclude_from_search'   => false,
-			'publicly_queryable'    => true,
-			'capability_type'       => 'page',
-			'menu_icon'                => 'dashicons-admin-users',
-		);
+		];
+		$args   = [
+			'label'               => __( 'Post Type', 'text_domain' ),
+			'description'         => __( 'Post Type Description', 'text_domain' ),
+			'labels'              => $labels,
+			'supports'            => [],
+			'taxonomies'          => [],
+			'hierarchical'        => false,
+			'public'              => true,
+			'show_ui'             => true,
+			'show_in_menu'        => true,
+			'menu_position'       => 5,
+			'show_in_admin_bar'   => true,
+			'show_in_nav_menus'   => true,
+			'can_export'          => true,
+			'has_archive'         => true,
+			'exclude_from_search' => false,
+			'publicly_queryable'  => true,
+			'capability_type'     => 'page',
+			'menu_icon'           => 'dashicons-admin-users',
+		];
 		register_post_type( 'br_person', $args );
 
 }
@@ -69,57 +69,57 @@ function cmb2_sample_metaboxes() {
 		/**
 		 * Initiate the metabox
 		 */
-		$cmb = new_cmb2_box( array(
-				'id'            => 'test_metabox',
-				'title'         => __( 'Staff Member', 'cmb2' ),
-				'object_types'  => array('br_person' ), // Post type
-				'context'       => 'normal',
-				'priority'      => 'high',
-				'show_names'    => true, // Show field names on the left
+		$cmb = new_cmb2_box( [
+			'id'           => 'test_metabox',
+			'title'        => __( 'Staff Member', 'cmb2' ),
+			'object_types' => [ 'br_person' ], // Post type
+			'context'      => 'normal',
+			'priority'     => 'high',
+			'show_names'   => true, // Show field names on the left
 				// 'cmb_styles' => false, // false to disable the CMB stylesheet
 				// 'closed'     => true, // Keep the metabox closed by default
-		) );
+		] );
 
 		// Regular text field
-		$cmb->add_field( array(
-				'name'       => __( 'Display Name', 'cmb2' ),
-				'desc'       => __( '', 'cmb2' ),
-				'id'         => $prefix . 'name',
-				'type'       => 'text',
-				'show_on_cb' => 'cmb2_hide_if_no_cats', // function should return a bool value
+		$cmb->add_field( [
+			'name'       => __( 'Display Name', 'cmb2' ),
+			'desc'       => '',
+			'id'         => $prefix . 'name',
+			'type'       => 'text',
+			'show_on_cb' => 'cmb2_hide_if_no_cats', // function should return a bool value
 				// 'sanitization_cb' => 'my_custom_sanitization', // custom sanitization callback parameter
 				// 'escape_cb'       => 'my_custom_escaping',  // custom escaping callback parameter
 				// 'on_front'        => false, // Optionally designate a field to wp-admin only
 				// 'repeatable'      => true,
-		) );
+		] );
 
-		$cmb->add_field( array(
+		$cmb->add_field( [
 			'name' => esc_html__( 'Portrait', 'cmb2' ),
 			'desc' => esc_html__( 'Upload an image or enter a URL.', 'cmb2' ),
 			'id'   => $prefix . 'portrait',
 			'type' => 'file',
-		) );
+		] );
 
 		// Regular text field
-		$cmb->add_field( array(
-				'name'       => __( 'Title', 'cmb2' ),
-				'desc'       => __( '', 'cmb2' ),
-				'id'         => $prefix . 'title',
-				'type'       => 'text',
-				'show_on_cb' => 'cmb2_hide_if_no_cats', // function should return a bool value
+		$cmb->add_field( [
+			'name'       => __( 'Title', 'cmb2' ),
+			'desc'       => '',
+			'id'         => $prefix . 'title',
+			'type'       => 'text',
+			'show_on_cb' => 'cmb2_hide_if_no_cats', // function should return a bool value
 				// 'sanitization_cb' => 'my_custom_sanitization', // custom sanitization callback parameter
 				// 'escape_cb'       => 'my_custom_escaping',  // custom escaping callback parameter
 				// 'on_front'        => false, // Optionally designate a field to wp-admin only
 				// 'repeatable'      => true,
-		) );
+		] );
 
-		$cmb->add_field( array(
+		$cmb->add_field( [
 			'name'    => esc_html__( 'Bio', 'cmb2' ),
 			'desc'    => '',
 			'id'      => $prefix . 'bio',
 			'type'    => 'wysiwyg',
-			'options' => array( 'textarea_rows' => 5, ),
-		) );
+			'options' => [ 'textarea_rows' => 5 ],
+		] );
 
 }
 
